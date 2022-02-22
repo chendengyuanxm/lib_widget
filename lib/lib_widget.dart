@@ -15,3 +15,4 @@ export 'src/simple_smart_refresher.dart';
 export 'src/stacked_image_row.dart';
 export 'src/single_choice_group.dart';
 export 'src/text_portrait.dart';
+export 'src/gap.dart';

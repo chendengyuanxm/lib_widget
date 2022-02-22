@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.arrow_back_ios_sharp),
+          icon: Icon(Icons.chevron_left),
         ),
       ),
       actions: actions,

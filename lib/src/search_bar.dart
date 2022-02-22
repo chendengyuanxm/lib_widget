@@ -49,7 +49,7 @@ class _SearchBarState extends State<SearchBar> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: Container(
-        height: 40,
+        height: 100.h,
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         decoration: widget.decoration ?? BoxDecoration(
           borderRadius: BorderRadius.circular(50),
