@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lib_widget/src/widget_config.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
@@ -21,12 +22,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: true,
       centerTitle: true,
       leading: Padding(
-        padding: EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 0),
         child: leading ?? IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.chevron_left),
+          icon: Icon(Icons.chevron_left_sharp, size: 30,),
         ),
       ),
       actions: actions,
@@ -34,5 +35,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(widgetConfig?.toolBarHeight ?? kToolbarHeight);
 }

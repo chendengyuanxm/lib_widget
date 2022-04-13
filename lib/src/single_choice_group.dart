@@ -8,6 +8,7 @@ class SingleChoiceGroup<T> extends StatefulWidget {
   final IndexedWidgetBuilder? builder;
   final ValueChanged? valueChanged;
   final bool expanded;
+  final Axis direction;
 
   const SingleChoiceGroup({
     Key? key,
@@ -17,6 +18,7 @@ class SingleChoiceGroup<T> extends StatefulWidget {
     this.valueChanged,
     this.builder,
     this.expanded = false,
+    this.direction = Axis.horizontal,
   }) : super(key: key);
 
   @override
@@ -34,35 +36,53 @@ class _SingleChoiceGroupState extends State<SingleChoiceGroup> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.direction == Axis.horizontal) {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        children: _buildChoicesItem(widget.direction),
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: _buildChoicesItem(widget.direction),
+      );
+    }
+  }
+
+  List<Widget> _buildChoicesItem(Axis direction) {
     int index = 0;
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: widget.items.map((e) {
-        Widget item;
-        if (widget.builder != null) {
-          item = widget.builder!(context, index ++);
-        } else {
-          item = _buildDefaultItem(e);
-        }
-        return Flexible(
-          flex: widget.expanded ? 1 : 0,
-          child: Padding(
-            padding: EdgeInsets.only(right: widget.spacing),
-            child: GestureDetector(
-              onTap: () {
-                _value = e;
-                if (widget.valueChanged != null) {
-                  widget.valueChanged?.call(e);
-                }
-                setState(() {
-                });
-              },
-              child: item,
-            ),
+    EdgeInsets padding;
+    if (direction == Axis.horizontal) {
+      padding = EdgeInsets.only(right: widget.spacing);
+    } else {
+      padding = EdgeInsets.only(bottom: widget.spacing);
+    }
+    return widget.items.map((e) {
+      Widget item;
+      if (widget.builder != null) {
+        item = widget.builder!(context, index ++);
+      } else {
+        item = _buildDefaultItem(e);
+      }
+      return Flexible(
+        flex: widget.expanded ? 1 : 0,
+        fit: FlexFit.tight,
+        child: Padding(
+          padding: padding,
+          child: GestureDetector(
+            onTap: () {
+              _value = e;
+              if (widget.valueChanged != null) {
+                widget.valueChanged?.call(e);
+              }
+              setState(() {
+              });
+            },
+            child: item,
           ),
-        );
-      }).toList(),
-    );
+        ),
+      );
+    }).toList();
   }
 
   Widget _buildDefaultItem(var e) {

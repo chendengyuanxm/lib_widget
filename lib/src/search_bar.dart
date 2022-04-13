@@ -4,19 +4,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class SearchBar extends StatefulWidget {
   final Widget? leading;
   final String hintText;
+  final TextStyle? textStyle;
+  final TextStyle? hintTextStyle;
   final Decoration? decoration;
+  final double? height;
   final bool cancelable;
   final bool enabled;
   final ValueChanged? onValueChanged;
+  final ValueChanged? onSubmitted;
 
   const SearchBar({
     Key? key,
     this.leading,
     this.hintText = '搜索',
+    this.textStyle,
+    this.hintTextStyle,
     this.decoration,
+    this.height,
     this.cancelable = true,
     this.enabled = true,
     this.onValueChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
@@ -49,7 +57,7 @@ class _SearchBarState extends State<SearchBar> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: Container(
-        height: 100.h,
+        height: widget.height ?? 100.h,
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         decoration: widget.decoration ?? BoxDecoration(
           borderRadius: BorderRadius.circular(50),
@@ -64,11 +72,10 @@ class _SearchBarState extends State<SearchBar> {
                 child: TextField(
                   enabled: widget.enabled,
                   controller: controller,
+                  style: widget.textStyle,
                   decoration: InputDecoration(
                     hintText: widget.hintText,
-                    hintStyle: TextStyle(
-                      fontSize: 30.sp,
-                    ),
+                    hintStyle: widget.hintTextStyle,
                     enabledBorder: border,
                     focusedBorder: border,
                     disabledBorder: border,
@@ -76,6 +83,9 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   onChanged: (value) {
                     widget.onValueChanged?.call(value);
+                  },
+                  onSubmitted: (value) {
+                    widget.onSubmitted?.call(value);
                   },
                 ),
               ),

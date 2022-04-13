@@ -1,5 +1,7 @@
 library lib_widget;
 
+export 'src/lib_widget_plugin.dart';
+export 'src/widget_config.dart';
 export 'src/custom_app_bar.dart';
 export 'src/expanded_wrap.dart';
 export 'src/log_util.dart';
