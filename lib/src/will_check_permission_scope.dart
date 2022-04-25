@@ -32,7 +32,7 @@ class _WillCheckPermissionScopeState extends State<WillCheckPermissionScope> wit
   _registerLifecycleListener() {
     WidgetsBinding.instance?.addObserver(this);
     subscription = FGBGEvents.stream.listen((event) {
-      LogUtils.v(event.toString()); // FGBGType.foreground or FGBGType.background
+      LogUtil.v(event.toString()); // FGBGType.foreground or FGBGType.background
       if (event == FGBGType.foreground) {
         checkPermissions();
       }
@@ -67,10 +67,10 @@ class _WillCheckPermissionScopeState extends State<WillCheckPermissionScope> wit
   }
 
   Future<bool> checkPermissions() async {
-    LogUtils.v('check permission...');
+    LogUtil.v('check permission...');
     Map<Permission, PermissionStatus> statuses = await _checkPermissions.request();
     bool verified = verifyPermissions(statuses);
-    LogUtils.v('all permission is granted: $verified');
+    LogUtil.v('all permission is granted: $verified');
     if (!verified) {
       // _showMissingPermissionDialog();
     }
