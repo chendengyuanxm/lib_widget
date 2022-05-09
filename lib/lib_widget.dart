@@ -4,7 +4,6 @@ export 'src/lib_widget_plugin.dart';
 export 'src/widget_config.dart';
 export 'src/custom_app_bar.dart';
 export 'src/expanded_wrap.dart';
-export 'src/log_util.dart';
 export 'src/will_check_permission_scope.dart';
 export 'src/gradient_wrap.dart';
 export 'src/search_bar.dart';
