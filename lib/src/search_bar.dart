@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchBar extends StatefulWidget {
   final Widget? leading;
+  final Widget? trailing;
   final String hintText;
   final TextStyle? textStyle;
   final TextStyle? hintTextStyle;
@@ -16,6 +17,7 @@ class SearchBar extends StatefulWidget {
   const SearchBar({
     Key? key,
     this.leading,
+    this.trailing,
     this.hintText = '搜索',
     this.textStyle,
     this.hintTextStyle,
@@ -42,7 +44,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     Widget leading = widget.leading != null ? widget.leading! : SizedBox();
-    Widget trailing = widget.cancelable ? IconButton(
+    Widget trailing = widget.trailing ?? (widget.cancelable ? IconButton(
       icon: new Icon(Icons.cancel),
       color: Colors.grey,
       iconSize: 20,
@@ -50,7 +52,7 @@ class _SearchBarState extends State<SearchBar> {
         controller.clear();
         widget.onValueChanged?.call('');
       },
-    ) : SizedBox();
+    ) : SizedBox());
     var border = OutlineInputBorder(
       borderSide: BorderSide(style: BorderStyle.none),
     );
