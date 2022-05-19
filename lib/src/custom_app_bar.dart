@@ -6,12 +6,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final Widget title;
   final List<Widget>? actions;
+  final VoidCallback? onClickBack;
 
   const CustomAppBar({
     Key? key,
     required this.title,
     this.leading,
     this.actions,
+    this.onClickBack,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: EdgeInsets.only(left: 0),
         child: leading ?? IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            if (onClickBack != null) {
+              onClickBack?.call();
+            } else {
+              Navigator.of(context).pop();
+            }
           },
           icon: Icon(Icons.chevron_left_sharp, size: 30,),
         ),
