@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -54,8 +56,16 @@ class _PhotoPreviewState extends State<PhotoPreview> {
                     scrollDirection: Axis.horizontal,
                     scrollPhysics: const BouncingScrollPhysics(),
                     builder: (BuildContext context, int index) {
+                      String image = widget.photoList[index] ?? '';
+                      bool isUrl = image.startsWith('http');
+                      ImageProvider imageProvider;
+                      if (isUrl) {
+                        imageProvider = CachedNetworkImageProvider(image);
+                      } else {
+                        imageProvider = FileImage(File(image));
+                      }
                       return PhotoViewGalleryPageOptions(
-                        imageProvider: CachedNetworkImageProvider(widget.photoList[index] ?? ''),
+                        imageProvider: imageProvider,
                         initialScale: PhotoViewComputedScale.contained * 1,
                         minScale: PhotoViewComputedScale.contained * 0.5,
                       );
