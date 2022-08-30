@@ -13,6 +13,7 @@ class SearchBar extends StatefulWidget {
   final bool enabled;
   final ValueChanged? onValueChanged;
   final ValueChanged? onSubmitted;
+  final TextEditingController? textEditingController;
 
   const SearchBar({
     Key? key,
@@ -27,6 +28,7 @@ class SearchBar extends StatefulWidget {
     this.enabled = true,
     this.onValueChanged,
     this.onSubmitted,
+    this.textEditingController,
   }) : super(key: key);
 
   @override
@@ -34,11 +36,12 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  final controller = TextEditingController();
+  late TextEditingController controller;
 
   @override
   void initState() {
     super.initState();
+    controller = widget.textEditingController ?? TextEditingController();
   }
 
   @override
@@ -56,46 +59,43 @@ class _SearchBarState extends State<SearchBar> {
     var border = OutlineInputBorder(
       borderSide: BorderSide(style: BorderStyle.none),
     );
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40.w),
-      child: Container(
-        height: widget.height ?? 100.h,
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        decoration: widget.decoration ?? BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            leading,
-            SizedBox(width: 5,),
-            Expanded(
-              child: Container(
-                child: TextField(
-                  enabled: widget.enabled,
-                  controller: controller,
-                  style: widget.textStyle,
-                  decoration: InputDecoration(
-                    hintText: widget.hintText,
-                    hintStyle: widget.hintTextStyle,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                    disabledBorder: border,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                  onChanged: (value) {
-                    widget.onValueChanged?.call(value);
-                  },
-                  onSubmitted: (value) {
-                    widget.onSubmitted?.call(value);
-                  },
+    return Container(
+      height: widget.height ?? 100.h,
+      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      decoration: widget.decoration ?? BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          leading,
+          SizedBox(width: 5,),
+          Expanded(
+            child: Container(
+              child: TextField(
+                enabled: widget.enabled,
+                controller: controller,
+                style: widget.textStyle,
+                decoration: InputDecoration(
+                  hintText: widget.hintText,
+                  hintStyle: widget.hintTextStyle,
+                  enabledBorder: border,
+                  focusedBorder: border,
+                  disabledBorder: border,
+                  contentPadding: EdgeInsets.zero,
                 ),
+                onChanged: (value) {
+                  widget.onValueChanged?.call(value);
+                },
+                onSubmitted: (value) {
+                  widget.onSubmitted?.call(value);
+                },
               ),
             ),
-            SizedBox(width: 5,),
-            trailing,
-          ],
-        ),
+          ),
+          SizedBox(width: 5,),
+          trailing,
+        ],
       ),
     );
   }
