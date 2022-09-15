@@ -14,6 +14,7 @@ class SearchBar extends StatefulWidget {
   final ValueChanged? onValueChanged;
   final ValueChanged? onSubmitted;
   final TextEditingController? textEditingController;
+  final FocusNode? focusNode;
 
   const SearchBar({
     Key? key,
@@ -29,6 +30,7 @@ class SearchBar extends StatefulWidget {
     this.onValueChanged,
     this.onSubmitted,
     this.textEditingController,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,7 @@ class _SearchBarState extends State<SearchBar> {
           Expanded(
             child: Container(
               child: TextField(
+                focusNode: widget.focusNode,
                 enabled: widget.enabled,
                 controller: controller,
                 style: widget.textStyle,
