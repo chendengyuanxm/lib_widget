@@ -13,6 +13,7 @@ class SimpleSmartRefresher extends StatefulWidget {
   final OnRefresh? onRefresh;
   final OnLoadMore? onLoadMore;
   final int totalPage;
+  final int pageNo;
 
   const SimpleSmartRefresher({
     Key? key,
@@ -24,6 +25,7 @@ class SimpleSmartRefresher extends StatefulWidget {
     this.onLoadMore,
     this.footer,
     this.totalPage = 1,
+    this.pageNo = 1,
   }) : assert(child != null), super(key: key);
 
   @override
@@ -33,6 +35,13 @@ class SimpleSmartRefresher extends StatefulWidget {
 class _SimpleSmartRefresherState extends State<SimpleSmartRefresher> {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   int _pageNo = 1;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _pageNo = widget.pageNo;
+  }
 
   _onRefresh() async{
     _pageNo = 1;
@@ -54,8 +63,8 @@ class _SimpleSmartRefresherState extends State<SimpleSmartRefresher> {
   Widget build(BuildContext context) {
     _refreshController.resetNoData();
     return SmartRefresher(
-      enablePullUp: true,
-      enablePullDown: true,
+      enablePullUp: widget.enablePullUp,
+      enablePullDown: widget.enablePullDown,
       controller: _refreshController,
       onRefresh: () => _onRefresh(),
       onLoading: () => _onLoadMore(),
